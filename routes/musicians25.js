@@ -17,11 +17,16 @@ router.get("/:id", async (request, response) => {
     response.json(musicianId);
 })
 
-router.post("/", async (req, res) => {
+router.post("/", [check("name").not().isEmpty().trim(), check("instrument").not().isEmpty().trim()], async (req, res) => {
     const newName = req.body.name;
     const newInstrument = req.body.instrument;
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        res.json({error: errors.array()})
+    } else {
     const newMusician = await Musician.create({name: newName, instrument: newInstrument});
     res.json(newMusician);
+    }
 })
 
 router.put("/:id", async (req, res) => {

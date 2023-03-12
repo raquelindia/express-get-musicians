@@ -4,7 +4,7 @@ const router = express.Router();
 const {Musician} = require("./index")
 const {sequelize} = require("./db")
 
-const port = 4008;
+const port = 4009;
 app.use(express.json());
 sequelize.sync();
 
